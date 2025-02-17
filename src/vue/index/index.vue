@@ -2,7 +2,17 @@
 
 <input type="file" @change="readGPX" />
 
-<HUD></HUD>
+<HUD
+	:speed="30"
+	:alt="hud_alt"
+	style="width: 60vw; height: 50vh; position: fixed; left: 20vw; top: 15vh; z-index: 20; background: rgba(0,0,0,0.1)"
+></HUD>
+
+<div style="width: 60vw; height: 60vh; position: fixed; left: 20vw; top: 15vh; z-index: 10 ">
+	<video style="width:100%; height: 100%" controls="controls" ref="vid">
+		 <source type="video/mp4" src="static/test_video.mp4">
+	</video>
+</div>
 
 
 </div></template>
@@ -11,7 +21,7 @@ import _ from "lodash";
 import { parseGPX } from "@we-gold/gpxjs";
 import GPXTrack from "app/lib/GPXTrack.js";
 
-import HUD from "./HUD.vue";
+import HUD from "sfc/HUD/HUD.vue";
 
 
 
@@ -35,10 +45,14 @@ function readFile(obj) {
 }
 
 
-
+var trackobj = null;
 
 export default {
 	mounted(){
+
+		this.$refs["vid"].addEventListener("timeupdate", (event)=>{
+			this.updateHUD(event.target.currentTime+5800);
+		})
 	},
 
 	methods: {
@@ -51,14 +65,23 @@ export default {
 			let track = _.get(parsedFile, "tracks.0");
 			if(_.isNil(track)) return;
 
-			const trackobj = new GPXTrack(track);
+			trackobj = new GPXTrack(track);
+		},
 
+		updateHUD(t){
+			if(!trackobj) return null;
+
+			console.log(t);
+			this.hud_alt = trackobj.elevation(t);
 		}
 	},
 
 	data(){
 		return {
 			started: false,
+
+			hud_speed: 0,
+			hud_alt: 0,
 		}
 	},
 

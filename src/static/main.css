@@ -1,13 +1,6 @@
-html {
-    font-size: 12px;
+svg path{
+    stroke: #5df59c;
 }
-
-.qr {
-    line-height: 0;
+svg text{
+    fill: #5df59c;
 }
-.qr div{
-    width: 5px; height: 5px; float: left;
-}
-.qr .black{background-color: black;}
-.qr .white{background-color: white;}
-.qr .clear{ clear: both; }
