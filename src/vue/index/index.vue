@@ -3,8 +3,9 @@
 <input type="file" @change="readGPX" />
 
 <HUD
-	:speed="30"
+	:speed="hud_speed"
 	:alt="hud_alt"
+	:bearing="hud_bearing"
 	style="width: 60vw; height: 50vh; position: fixed; left: 20vw; top: 15vh; z-index: 20; background: rgba(0,0,0,0.1)"
 ></HUD>
 
@@ -51,7 +52,7 @@ export default {
 	mounted(){
 
 		this.$refs["vid"].addEventListener("timeupdate", (event)=>{
-			this.updateHUD(event.target.currentTime+5800);
+			this.updateHUD(event.target.currentTime+6600);
 		})
 	},
 
@@ -71,8 +72,9 @@ export default {
 		updateHUD(t){
 			if(!trackobj) return null;
 
-			console.log(t);
 			this.hud_alt = trackobj.elevation(t);
+			this.hud_speed = trackobj.speedMoment(t);
+			this.hud_bearing = trackobj.bearing(t);
 		}
 	},
 
@@ -82,6 +84,7 @@ export default {
 
 			hud_speed: 0,
 			hud_alt: 0,
+			hud_bearing: 0,
 		}
 	},
 

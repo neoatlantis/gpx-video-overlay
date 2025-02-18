@@ -3,6 +3,26 @@
 
 
     <BasicSVG :width="width" :height="height">
+        <g :transform="'translate('+(width/2)+','+(ty*4)+')'">
+
+            <g :transform="'translate('+(-16*width/36/2 + (Math.round(bearing)%10)/10*width/36  )+')'">
+                <line
+                    v-for="n in 16"
+                    :x1="n*width/36" :y1="0"
+                    :x2="n*width/36" :y2="ty"
+                    fill="transparent"
+                />
+            </g>
+            <text 
+                :x="0" :y="-ty"
+                text-anchor="middle"
+                dominant-baseline="hanging"
+                font-family="monospace"
+                :font-size="ty*0.9"
+            >{{ (bearing).toFixed(0) }}</text>
+        </g>
+
+
         <g :transform="'translate('+(width/2+window_spacing_x/2)+','+(height/2-ty/2)+')'">
             <path :d='[
                 "M", 0, ty/2,
@@ -18,7 +38,7 @@
                 dominant-baseline="hanging"
                 font-family="monospace"
                 :font-size="ty*0.9"
-            >{{ alt.toFixed(0) }}</text>
+            >{{ (alt).toFixed(0) }}</text>
             <text 
                 :x="tx/2" :y="-ty*0.3"
                 text-anchor="start"
@@ -43,7 +63,7 @@
                 dominant-baseline="hanging"
                 font-family="monospace"
                 :font-size="ty*0.9"
-            >{{ speed.toFixed(0) }}</text>
+            >{{ (speed*3.6).toFixed(1) }}</text>
             <text 
                 :x="0" :y="-ty*0.3"
                 text-anchor="start"
@@ -69,6 +89,9 @@ export default {
         alt: {
             type: Number,
         },
+        bearing: {
+            type: Number,
+        }
     },
 
     mounted(){
