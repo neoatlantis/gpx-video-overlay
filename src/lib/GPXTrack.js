@@ -11,6 +11,7 @@ class GPXTrack {
 
     constructor(track){
         this.#trackobj = track;
+        console.log(track);
 
         this.#startMoment = moment(_.get(this.#trackobj, "duration.startTime"));
 
@@ -42,8 +43,6 @@ class GPXTrack {
             p1.speedMoment = p1.deltaDistance / (p1.secondsAfterStart - p0.secondsAfterStart);
             p1.bearing = this.#bearingByLatLng(lat0, lng0, lat1, lng1);
         }
-
-        console.log(this.#trackobj.points);
 
     }
 

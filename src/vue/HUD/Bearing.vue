@@ -1,7 +1,7 @@
 <template>
 <g>
     <clipPath id="clip">
-        <rect :width="bar_width" :height="ty*3" :x="(width-bar_width)/2+bearing_calc_offset" :y="-ty"/>
+        <rect :width="bar_width" :height="ty*4" :x="(width-bar_width)/2+bearing_calc_offset" :y="-ty*1.2"/>
         <!--<rect :width="width" :height="ty*3" :x="width/2+bearing_calc_offset" :y="-ty"/>-->
     </clipPath>
 
@@ -18,16 +18,14 @@
                 :x="n*size_division" :y="-ty"
                 text-anchor="middle"
                 dominant-baseline="hanging"
-                font-family="monospace"
                 :font-size="ty*0.9"
             >{{ direction_text[n] }}</text>
         </template>
     </g>
     <text 
-        :x="0" :y="ty*0.7"
+        :x="0" :y="ty*0.9"
         text-anchor="middle"
         dominant-baseline="hanging"
-        font-family="monospace"
         :font-size="ty*0.9"
     >{{ (bearing).toFixed(0) }}</text>
 </g>
