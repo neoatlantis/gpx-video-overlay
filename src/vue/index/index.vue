@@ -7,7 +7,7 @@
 	:alt="hud_alt"
 	:bearing="hud_bearing"
 	:time="hud_time"
-	style="width: 60vw; height: 50vh; position: fixed; left: 20vw; top: 15vh; z-index: 20; background: rgba(0,0,0,0.1)"
+	style="width: 60vw; height: 50vh; position: fixed; left: 20vw; top: 15vh; z-index: 20; background: rgba(0,0,0,0.0)"
 ></HUD>
 
 <div style="width: 60vw; height: 60vh; position: fixed; left: 20vw; top: 15vh; z-index: 10 ">
