@@ -51,9 +51,13 @@ var trackobj = null;
 export default {
 	mounted(){
 
-		this.$refs["vid"].addEventListener("timeupdate", (event)=>{
+		/*this.$refs["vid"].addEventListener("timeupdate", (event)=>{
 			this.updateHUD(event.target.currentTime+6600);
-		})
+		})*/
+
+		setInterval(()=>{
+			this.updateHUD(this.$refs["vid"].currentTime+6600);
+		}, 100);
 	},
 
 	methods: {

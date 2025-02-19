@@ -3,24 +3,10 @@
 
 
     <BasicSVG :width="width" :height="height">
-        <g :transform="'translate('+(width/2)+','+(ty*4)+')'">
-
-            <g :transform="'translate('+(-16*width/36/2 + (Math.round(bearing)%10)/10*width/36  )+')'">
-                <line
-                    v-for="n in 16"
-                    :x1="n*width/36" :y1="0"
-                    :x2="n*width/36" :y2="ty"
-                    fill="transparent"
-                />
-            </g>
-            <text 
-                :x="0" :y="-ty"
-                text-anchor="middle"
-                dominant-baseline="hanging"
-                font-family="monospace"
-                :font-size="ty*0.9"
-            >{{ (bearing).toFixed(0) }}</text>
-        </g>
+        <Bearing
+            :transform="'translate('+(width/2)+','+(ty*4.5)+')'"
+            :width="width" :height="height" :tx="tx" :ty="ty" :bearing="bearing"
+        ></Bearing>
 
 
         <g :transform="'translate('+(width/2+window_spacing_x/2)+','+(height/2-ty/2)+')'">
@@ -80,6 +66,8 @@
 </template>
 <script>
 import BasicSVG from "./BasicSVG.vue";
+import Bearing from "./Bearing.vue";
+
 export default {
 
     props: {
@@ -130,6 +118,7 @@ export default {
 
     components: {
         BasicSVG,
+        Bearing,
     }
 }
 </script>
