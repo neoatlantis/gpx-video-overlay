@@ -20,56 +20,21 @@
 
 
         <Bearing
-            :transform="'translate('+(width/2)+','+(ty*4.5)+')'"
+            :transform="'translate('+(width/2)+','+(ty*6.5)+')'"
             :width="width" :height="height" :tx="tx" :ty="ty" :bearing="bearing"
         ></Bearing>
 
 
-        <g :transform="'translate('+(width/2+window_spacing_x/2)+','+(height/2-ty/2)+')'">
-            <path :d='[
-                "M", 0, ty/2,
-                "L", tx/2, 0,
-                "H", tx*3,
-                "V", ty,
-                "H", tx/2,
-                "L", 0, ty/2,
-            ].join(" ")' fill="transparent" filter="url(#neon)"/>
-            <text
-                :x="tx*2.9" :y="ty*0.22"
-                text-anchor="end"
-                dominant-baseline="hanging"
-                :font-size="ty"
-            >{{ (alt).toFixed(0) }}</text>
-            <text 
-                :x="tx/2" :y="-ty*0.3"
-                text-anchor="start"
-                dominant-baseline="baseline"
-                :font-size="ty"
-            >ALT</text>
-        </g>
+        <Alt
+            :transform="'translate('+(width/2+window_spacing_x/2)+','+(height/2-ty/2)+')'"
+            :width="width" :height="height" :tx="tx" :ty="ty" :alt="alt"
+        ></Alt>
 
-        <g :transform="'translate('+(width/2-tx*3-window_spacing_x/2)+','+(height/2-ty/2)+')'">
-            <path :d='[
-                "M", tx*3.0, ty/2,
-                "L", tx*2.5, 0,
-                "H", 0,
-                "V", ty,
-                "H", tx*2.5,
-                "L", tx*3, ty/2,
-            ].join(" ")' fill="transparent" filter="url(#neon)"/>
-            <text 
-                :x="tx*0.25" :y="ty*0.22"
-                text-anchor="start"
-                dominant-baseline="hanging"
-                :font-size="ty"
-            >{{ (speed*3.6).toFixed(1) }}</text>
-            <text 
-                :x="0" :y="-ty*0.3"
-                text-anchor="start"
-                dominant-baseline="baseline"
-                :font-size="ty"
-            >SPEED</text>
-        </g>
+        <Speed
+            :transform="'translate('+(width/2-tx*3-window_spacing_x/2)+','+(height/2-ty/2)+')'"
+            :width="width" :height="height" :tx="tx" :ty="ty" :speed="speed"
+        >
+        </Speed>
 
         <text
             :x="tx" :y="ty*2"
@@ -87,6 +52,8 @@
 import _ from "lodash";
 import BasicSVG from "./BasicSVG.vue";
 import Bearing from "./Bearing.vue";
+import Alt from "./Alt.vue";
+import Speed from "./Speed.vue";
 
 export default {
 
@@ -153,6 +120,8 @@ export default {
     components: {
         BasicSVG,
         Bearing,
+        Alt,
+        Speed,
     }
 }
 </script>

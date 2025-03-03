@@ -9,6 +9,8 @@ class GPXTrack {
     #trackobj;
     #startMoment;
 
+    #seekingOffset = 0;
+
     constructor(track){
         this.#trackobj = track;
         console.log(track);
@@ -89,22 +91,28 @@ class GPXTrack {
         return -1;
     }
 
-    momentSecondsAfterStart(seconds){
-        return start.clone().add(seconds, "second");
+    get startMoment(){
+        return this.#startMoment.clone();
     }
 
     elevation(second){
+        second += this.#seekingOffset;
         return this.#interpolate("elevation", second);
     }
 
     speedMoment(second){
+        second += this.#seekingOffset;
         return this.#interpolate("speedMoment", second);
     }
 
     bearing(second){
+        second += this.#seekingOffset;
         return this.#interpolate("bearing", second);
     }
 
+    setSeekingOffset(seconds){
+        this.#seekingOffset = seconds;
+    }
 
 }
 

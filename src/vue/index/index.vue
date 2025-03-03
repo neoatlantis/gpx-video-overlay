@@ -1,13 +1,17 @@
 <template><div class="container-fluid" style="padding: 0.5em">
 
-<input type="file" @change="readGPX" />
+Select GPX file: <input type="file" @change="readGPX" />
+-> GPX starts at: {{ gpx_start_moment }}
+Start offset: <input type="number" v-model="gpx_offset_seconds" width="4" /> seconds
+Aligned start: {{ gpx_real_start_moment }}
+
 
 <HUD
 	:speed="hud_speed"
 	:alt="hud_alt"
 	:bearing="hud_bearing"
 	:time="hud_time"
-	style="width: 60vw; height: 50vh; position: fixed; left: 20vw; top: 15vh; z-index: 20; background: rgba(0,0,0,0.0)"
+	style="width: 50vw; height: 50vh; position: fixed; left: 25vw; top: 20vh; z-index: 20; background: rgba(0,0,0,0.0)"
 ></HUD>
 
 <div style="width: 60vw; height: 60vh; position: fixed; left: 20vw; top: 15vh; z-index: 10 ">
@@ -20,6 +24,7 @@
 </div></template>
 <script>
 import _ from "lodash";
+import moment from "moment";
 import { parseGPX } from "@we-gold/gpxjs";
 import GPXTrack from "app/lib/GPXTrack.js";
 
@@ -57,8 +62,11 @@ export default {
 		})*/
 
 		setInterval(()=>{
-			this.updateHUD(this.$refs["vid"].currentTime+6600);
+			this.updateHUD(this.$refs["vid"].currentTime+this.gpx_offset_seconds);
 		}, 100);
+
+		let start_moment = localStorage.getItem("start_moment");
+		if(!_.isNil(start_moment)) this.start_moment = start_moment;
 	},
 
 	methods: {
@@ -72,6 +80,7 @@ export default {
 			if(_.isNil(track)) return;
 
 			trackobj = new GPXTrack(track);
+			this.gpx_start_moment = trackobj.startMoment.toISOString();
 		},
 
 		updateHUD(t){
@@ -84,9 +93,23 @@ export default {
 		}
 	},
 
+	computed: {
+		gpx_real_start_moment(){
+			return moment(this.gpx_start_moment).add(this.gpx_offset_seconds, 's').toISOString();
+		}
+	},
+
+	watch: {
+		gpx_offset_seconds(){
+			localStorage.setItem("gpx_offset_seconds", this.gpx_offset_seconds);
+		}
+	},
+
 	data(){
 		return {
 			started: false,
+			gpx_start_moment: "",
+			gpx_offset_seconds: 0,
 
 			hud_speed: 0,
 			hud_alt: 0,
